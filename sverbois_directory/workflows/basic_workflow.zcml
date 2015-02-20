@@ -1,0 +1,96 @@
+<configure xmlns="http://namespaces.repoze.org/bfg"
+           xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+           i18n:domain="sverbois_directory">
+
+  <include package="repoze.workflow" file="meta.zcml"/>
+
+  <workflow
+      type="security"
+      name="basic"
+      state_attr="state"
+      initial_state="private"
+      content_types="sverbois_directory.interfaces.IBasicWorkflow"
+      permission_checker="pyramid.security.has_permission"
+      >
+
+    <state name="private" callback="kotti.workflow.workflow_callback">
+
+      <key name="title" value="_(u'Private')" />
+      <key name="order" value="1" />
+
+      <key name="inherit" value="0" />
+      <key name="system.Everyone" value="" />
+      <key name="role:viewer" value="" />
+      <key name="role:editor" value="view add edit delete state_change" />
+      <key name="role:owner" value="view add edit delete state_change" />
+      <key name="role:webmaster" value="view add edit delete manage state_change" />
+
+    </state>
+
+    <state name="internal" callback="kotti.workflow.workflow_callback">
+
+      <key name="title" value="_(u'Internal')" />
+      <key name="order" value="2" />
+
+      <key name="inherit" value="0" />
+      <key name="system.Everyone" value="" />
+      <key name="role:viewer" value="view" />
+      <key name="role:editor" value="view add edit delete state_change" />
+      <key name="role:owner" value="view add edit delete  state_change" />
+      <key name="role:webmaster" value="view add edit delete manage state_change" />
+
+    </state>
+
+    <state name="public" callback="kotti.workflow.workflow_callback">
+
+      <key name="title" value="_(u'Public')" />
+      <key name="order" value="3" />
+
+      <key name="inherit" value="0" />
+      <key name="system.Everyone" value="view" />
+      <key name="role:viewer" value="view" />
+      <key name="role:editor" value="view add edit delete state_change" />
+      <key name="role:owner" value="view add edit delete state_change" />
+      <key name="role:webmaster" value="view add edit delete manage state_change" />
+
+    </state>
+
+    <transition
+        name="private_to_internal"
+        from_state="private"
+        to_state="internal"
+        permission="state_change" />
+
+    <transition
+        name="private_to_public"
+        from_state="private"
+        to_state="public"
+        permission="state_change" />
+
+    <transition
+        name="internal_to_private"
+        from_state="internal"
+        to_state="private"
+        permission="state_change" />
+
+    <transition
+        name="internal_to_public"
+        from_state="internal"
+        to_state="public"
+        permission="state_change" />
+
+    <transition
+        name="public_to_internal"
+        from_state="public"
+        to_state="internal"
+        permission="state_change" />
+
+    <transition
+        name="public_to_private"
+        from_state="public"
+        to_state="private"
+        permission="state_change" />
+
+  </workflow>
+
+</configure>

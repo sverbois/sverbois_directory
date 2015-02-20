@@ -1,0 +1,8 @@
+<configure xmlns="http://namespaces.repoze.org/bfg">
+
+    <!--<include package="kotti" file="workflow.zcml"/>-->
+
+    <include file="workflows/basic_workflow.zcml"/>
+    <include file="workflows/inherit_workflow.zcml"/>
+
+</configure>

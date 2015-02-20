@@ -1,0 +1,26 @@
+<configure xmlns="http://namespaces.repoze.org/bfg"
+           xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+           i18n:domain="sverbois_directory">
+
+  <include package="repoze.workflow" file="meta.zcml"/>
+
+  <workflow
+      type="security"
+      name="inherit"
+      state_attr="state"
+      initial_state="inherited"
+      content_types="sverbois_directory.interfaces.IInheritWorkflow"
+      permission_checker="pyramid.security.has_permission"
+      >
+
+    <state name="inherited" callback="kotti.workflow.workflow_callback">
+
+      <key name="title" value="_(u'inherited')" />
+      <key name="order" value="1" />
+      <key name="inherit" value="1" />
+
+    </state>
+
+  </workflow>
+
+</configure>

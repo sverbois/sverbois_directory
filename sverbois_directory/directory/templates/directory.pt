@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html metal:use-macro="api.macro('kotti:templates/view/master.pt')" i18n:domain="sverbois_directory">
+
+  <article metal:fill-slot="content" class="content directory-view">
+    <h1>${context.title}</h1>
+    <p class="lead">
+      ${context.description}
+    </p>
+    <h2 i18n:translate="">People</h2>
+    <div class="body">
+      <table class="table table-condensed">
+        <thead>
+          <tr>
+            <th i18n:translate="">Lastname</th>
+            <th i18n:translate="">Firstname</th>
+            <th i18n:translate="">Birthday</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr tal:repeat="p context.children_with_permission(request)">
+            <tal:block tal:define="url request.resource_url(p)">
+            <td>
+                <a href="${url}">${p.lastname}</a>
+            </td>
+            <td>
+                <a href="${url}">${p.firstname}</a>
+            </td>
+            <td>
+                ${p.birthday}
+            </td>
+            </tal:block>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </article>
+
+</html>

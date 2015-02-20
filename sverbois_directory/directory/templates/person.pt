@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html metal:use-macro="api.macro('kotti:templates/view/master.pt')" i18n:domain="sverbois_directory">
+
+  <article metal:fill-slot="content" class="content person-view">
+
+    <h1>${context.fullname}</h1>
+    <p class="lead">
+      <span i18n:translate="">Birthday</span> : ${context.birthday}
+    </p>
+
+  </article>
+
+</html>
