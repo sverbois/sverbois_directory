@@ -18,7 +18,7 @@ set_user_management_roles([u'role:viewer', u'role:editor', u'role:webmaster', u'
 def kotti_configure(settings):
     settings['pyramid.includes'] += ' sverbois_directory'
     settings['kotti.fanstatic.view_needed'] += ' sverbois_directory.fanstatic.css_and_js'
-    settings['kotti.available_types'] += '  sverbois_directory.directory.resources.Directory sverbois_directory.directory.resources.Person'
+    settings['kotti.available_types'] += '  sverbois_directory.resources.Directory sverbois_directory.resources.Person'
     settings['kotti.use_workflow'] = 'sverbois_directory:workflows.zcml'
     settings['kotti.populators'] += ' sverbois_directory.populate.populate'
     settings['kotti.alembic_dirs'] += ' sverbois_directory:alembic'

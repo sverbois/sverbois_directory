@@ -12,7 +12,7 @@ from pyramid.view import view_config
 
 from sverbois_directory import _
 from sverbois_directory.fanstatic import css_and_js
-from .resources import Person, Directory
+from sverbois_directory.resources import Person, Directory
 
 
 ### PERSON ###
