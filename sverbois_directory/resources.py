@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 
+import sqlalchemy
 from kotti.resources import Content
 from kotti.util import Link, LinkParent, LinkRenderer
-from sqlalchemy import Column
-from sqlalchemy import ForeignKey
-from sqlalchemy import Integer
-from sqlalchemy import Unicode, Integer, Date
+from sqlalchemy import Column, ForeignKey
 from zope.interface import implements
 
 from sverbois_directory import _
@@ -17,10 +15,11 @@ class Person(Content):
 
     implements(IInheritWorkflow)
 
-    id = Column(Integer, ForeignKey('contents.id'), primary_key=True)
-    firstname = Column(Unicode(128))
-    lastname = Column(Unicode(128))
-    birthday = Column(Date())
+    id = Column(sqlalchemy.Integer, ForeignKey('contents.id'), primary_key=True)
+    firstname = Column(sqlalchemy.Unicode(128))
+    lastname = Column(sqlalchemy.Unicode(128))
+    birthday = Column(sqlalchemy.Date())
+    diver = Column(sqlalchemy.Boolean())
 
     type_info = Content.type_info.copy(
         name=u'Person',
@@ -50,7 +49,7 @@ class Directory(Content):
 
     implements(IBasicWorkflow)
 
-    id = Column(Integer, ForeignKey('contents.id'), primary_key=True)
+    id = Column(sqlalchemy.Integer, ForeignKey('contents.id'), primary_key=True)
 
     type_info = Content.type_info.copy(
         name=u'Directory',

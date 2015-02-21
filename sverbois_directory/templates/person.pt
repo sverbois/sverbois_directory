@@ -7,6 +7,13 @@
     <p class="lead">
       <span i18n:translate="">Birthday</span> : ${context.birthday}
     </p>
+    <div class="row">
+      <div class="col-xs-8 col-md-4">
+        <table class="table">
+          <tr i18n:translate=""><th>Diver</th><td>${'yes' if context.diver else 'no'}</td></tr>
+        </table>
+      </div>
+    </div>
 
   </article>
 

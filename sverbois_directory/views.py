@@ -11,8 +11,9 @@ from kotti.views.form import EditFormView
 from pyramid.view import view_config
 
 from sverbois_directory import _
-from sverbois_directory.fanstatic import css_and_js
-from sverbois_directory.resources import Person, Directory
+from .fanstatic import css_and_js
+from .resources import Person, Directory
+from .utils import check_edit_permission
 
 
 ### PERSON ###
@@ -34,7 +35,12 @@ class PersonSchema(colander.MappingSchema):
         colander.Date(),
         missing=None,
         widget=deform.widget.DateInputWidget(),
-        title=_(u"birthday"))
+        title=_(u"Birthday"))
+    diver = colander.SchemaNode(
+        colander.Boolean(),
+        default=False,
+        title=_(u"Diver"),
+        edit_permission='manage')
 
 
 @view_config(name=Person.type_info.add_view, context=Directory, permission='add',
@@ -51,7 +57,9 @@ class PersonAddForm(AddFormView):
 @view_config(name='edit', context=Person, permission='edit',
              renderer='kotti:templates/edit/node.pt')
 class PersonEditForm(EditFormView):
-    schema_factory = PersonSchema
+    def schema_factory(self):
+        schema = PersonSchema()
+        return check_edit_permission(schema, self.context, self.request)
 
 
 ### DIRECTORY ###

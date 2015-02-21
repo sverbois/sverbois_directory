@@ -14,6 +14,7 @@
             <th i18n:translate="">Lastname</th>
             <th i18n:translate="">Firstname</th>
             <th i18n:translate="">Birthday</th>
+            <th i18n:translate="">Diver</th>
           </tr>
         </thead>
         <tbody>
@@ -27,6 +28,9 @@
             </td>
             <td>
                 ${p.birthday}
+            </td>
+            <td>
+                <span tal:condition="p.diver" class="glyphicon glyphicon-ok"></span>
             </td>
             </tal:block>
           </tr>
