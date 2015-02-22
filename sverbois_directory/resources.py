@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import sqlalchemy
+from kotti.events import ObjectInsert, ObjectUpdate, subscribe
 from kotti.resources import Content
 from kotti.util import Link, LinkParent, LinkRenderer
 from sqlalchemy import Column, ForeignKey
@@ -42,6 +43,15 @@ class Person(Content):
     @property
     def fullname(self):
         return self.firstname + u' ' + self.lastname
+
+
+@subscribe(ObjectInsert, Person)
+@subscribe(ObjectUpdate, Person)
+def person_handler(event):
+    person = event.object
+    person.title = person.fullname
+    person.owner = None
+    person.in_navigation = False
 
 
 class Directory(Content):

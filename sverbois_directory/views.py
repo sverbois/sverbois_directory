@@ -13,7 +13,14 @@ from pyramid.view import view_config
 from sverbois_directory import _
 from .fanstatic import css_and_js
 from .resources import Person, Directory
-from .utils import check_edit_permission
+
+
+def check_edit_permission(schema, context, request):
+    for child in schema.children:
+        if hasattr(child, 'edit_permission'):
+            if not request.has_permission(child.edit_permission, context):
+                del schema[child.name]
+    return schema
 
 
 ### PERSON ###
