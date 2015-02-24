@@ -20,7 +20,9 @@ class Person(Content):
     firstname = Column(sqlalchemy.Unicode(128))
     lastname = Column(sqlalchemy.Unicode(128))
     birthday = Column(sqlalchemy.Date())
-    diver = Column(sqlalchemy.Boolean())
+    diver = Column(
+        sqlalchemy.Boolean(),
+        info={'colanderalchemy': {'edit_permission': 'manage'}})
 
     type_info = Content.type_info.copy(
         name=u'Person',

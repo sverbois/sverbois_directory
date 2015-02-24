@@ -3,6 +3,7 @@
 import colander
 import deform
 import uuid
+from colanderalchemy import SQLAlchemySchemaNode
 from kotti.util import title_to_name
 from kotti.resources import IDocument
 from kotti.views.edit import ContentSchema
@@ -65,7 +66,8 @@ class PersonAddForm(AddFormView):
              renderer='kotti:templates/edit/node.pt')
 class PersonEditForm(EditFormView):
     def schema_factory(self):
-        schema = PersonSchema()
+        #schema = PersonSchema()
+        schema = SQLAlchemySchemaNode(Person, includes=['firstname', 'lastname', 'birthday', 'diver'])
         return check_edit_permission(schema, self.context, self.request)
 
 

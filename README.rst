@@ -1,7 +1,13 @@
 sverbois_directory
 ==================
 
-A simple directory to learn Kotti.
+A Kotti POC with:
+
+- new content types
+- new workflows
+- new roles
+- edit permission control
+- use colanderalchemy for edit view
 
 Setup
 -----
