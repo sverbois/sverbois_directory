@@ -26,9 +26,9 @@ Installation::
     git clone git@github.com:sverbois/sverbois_directory.git
     cd sverbois_directory
     virtualenv-2.7 .
-    ./bin/python bootstrap-buildout.py --version=2.3.1 --setuptools-version=12.0.5 -c apptest.cfg
-    ./bin/buildout -c apptest.cfg
+    ./bin/pip install -U pip
+    ./bin/pip install -r requirements.txt
 
 Start application::
 
-    ./bin/pserve apptest.ini --reload
+    ./bin/pserve apptest.ini --reload --browser
