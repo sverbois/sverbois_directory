@@ -4,7 +4,7 @@ import colander
 import deform
 import uuid
 from colanderalchemy import SQLAlchemySchemaNode
-from kotti.util import title_to_name
+from datetime import date, timedelta
 from kotti.resources import IDocument
 from kotti.views.edit import ContentSchema
 from kotti.views.form import AddFormView
@@ -12,7 +12,6 @@ from kotti.views.form import EditFormView
 from pyramid.view import view_config
 
 from sverbois_directory import _
-from .fanstatic import css_and_js
 from .resources import Person, Directory
 
 
@@ -23,8 +22,6 @@ def check_edit_permission(schema, context, request):
                 del schema[child.name]
     return schema
 
-
-### PERSON ###
 
 @view_config(name='view', context=Person, renderer='templates/person.pt', permission='view')
 def person_view(context, request):
@@ -42,7 +39,15 @@ class PersonSchema(colander.MappingSchema):
     birthday = colander.SchemaNode(
         colander.Date(),
         missing=None,
-        widget=deform.widget.DateInputWidget(),
+        widget=deform.widget.DateInputWidget(
+            # see available options here : http://amsul.ca/pickadate.js/date/
+            options={
+                'format': 'yyyy-mm-dd',
+                'selectYears': 80,
+                'selectMonths': True,
+                'max': date.today().isoformat(),
+            }
+        ),
         title=_(u"Birthday"))
     diver = colander.SchemaNode(
         colander.Boolean(),
@@ -66,20 +71,20 @@ class PersonAddForm(AddFormView):
              renderer='kotti:templates/edit/node.pt')
 class PersonEditForm(EditFormView):
     def schema_factory(self):
-        #schema = PersonSchema()
-        schema = SQLAlchemySchemaNode(Person, includes=['firstname', 'lastname', 'birthday', 'diver'])
+        schema = PersonSchema()
+        # schema = SQLAlchemySchemaNode(Person, includes=['firstname', 'lastname', 'birthday', 'diver'])
         return check_edit_permission(schema, self.context, self.request)
 
-
-### DIRECTORY ###
 
 @view_config(name='view', context=Directory, permission='view',
              renderer='templates/directory.pt')
 def directory_view(context, request):
     return {}
 
+
 class DirectorySchema(ContentSchema):
     pass
+
 
 @view_config(name=Directory.type_info.add_view, context=IDocument, permission='add',
              renderer='kotti:templates/edit/node.pt')
